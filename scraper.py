@@ -20,7 +20,7 @@ class Cell:
 driver_path = "./chromedriver.exe"
 driver = webdriver.Chrome()
 #driver.fullscreen_window()
-driver.get('https://www.nytimes.com/crosswords/game/mini/2016/06/01')
+driver.get('https://www.nytimes.com/crosswords/game/mini/2014/10/23')
 ok_button = driver.find_element_by_class_name('buttons-modalButton--1REsR')
 ok_button.click()
 
@@ -101,11 +101,16 @@ for index in range(0,len(clue_obj_list)):
                     to_be_added = 5*loc_i+index2
                     if cell_obj_list[to_be_added].is_black == False:
                         constructed_answer += cell_obj_list[to_be_added].letter
+                    else:
+                        break
             elif clue_obj_list[index].direction == 1: # down
                 for index2 in range(loc_i+1,5):
                     to_be_added = 5*index2+loc_j
                     if cell_obj_list[to_be_added].is_black == False:
                         constructed_answer += cell_obj_list[to_be_added].letter
+                    else:
+                        break
+
             for index3 in range(0,len(clue_obj_list)):
                 if clue_obj_list[index3].number == number and clue_obj_list[index3].direction == direction :
                     clue_obj_list[index3].answer = constructed_answer
@@ -134,7 +139,7 @@ for cell in cell_obj_list:
     cell_json['j'] = cell.loc_j
     data['cells'].append(cell_json)
 
-with open('data.json', 'w', encoding='utf-8') as f:
+with open('data1.json', 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
 
 driver.close()
