@@ -19,8 +19,9 @@ class Cell:
 
 driver_path = "./chromedriver.exe"
 driver = webdriver.Chrome()
+driver.fullscreen_window()
 #driver.fullscreen_window()
-driver.get('https://www.nytimes.com/crosswords/game/mini/2014/10/23')
+driver.get('https://www.nytimes.com/crosswords/game/mini/')
 ok_button = driver.find_element_by_class_name('buttons-modalButton--1REsR')
 ok_button.click()
 
@@ -139,7 +140,15 @@ for cell in cell_obj_list:
     cell_json['j'] = cell.loc_j
     data['cells'].append(cell_json)
 
-with open('data1.json', 'w', encoding='utf-8') as f:
+with open('./app/data.json', 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
 
+
 driver.close()
+
+driver2 = webdriver.Chrome()
+driver2.get('http://localhost:3131/')
+driver2.fullscreen_window()
+driver2.implicitly_wait(10)
+driver2.find_element_by_id('revealButton').click()
+#file://

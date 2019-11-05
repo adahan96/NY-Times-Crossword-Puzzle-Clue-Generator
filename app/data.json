@@ -1,64 +1,64 @@
 {
     "clues": [
         {
-            "text": "Energy",
+            "text": "Santa's little helper",
             "direction": 0,
             "number": "1",
-            "answer": "PEP"
+            "answer": "ELF"
         },
         {
-            "text": "Five on a par four, e.g.",
+            "text": "Team",
             "direction": 0,
             "number": "4",
-            "answer": "BOGEY"
+            "answer": "SQUAD"
         },
         {
-            "text": "Bottom of a pond food chain",
+            "text": "Approximately 28.35 grams",
             "direction": 0,
             "number": "6",
-            "answer": "ALGAE"
+            "answer": "OUNCE"
         },
         {
-            "text": "\"Light My Fire\" band, with \"the\"",
+            "text": "Breakfast that can be \"everything\"",
             "direction": 0,
             "number": "7",
-            "answer": "DOORS"
+            "answer": "BAGEL"
         },
         {
-            "text": "Show on which Kate McKinnon impersonates Hillary Clinton",
+            "text": "Was in first place",
             "direction": 0,
             "number": "8",
-            "answer": "SNL"
+            "answer": "LED"
         },
         {
-            "text": "Preppy shirts",
+            "text": "Sugar substitute in a blue packet",
             "direction": 1,
             "number": "1",
-            "answer": "POLOS"
+            "answer": "EQUAL"
         },
         {
-            "text": "Goad",
+            "text": "Leg movement used in crescent pose",
             "direction": 1,
             "number": "2",
-            "answer": "EGGON"
+            "answer": "LUNGE"
         },
         {
-            "text": "Find in an oyster",
+            "text": "Confronted directly",
             "direction": 1,
             "number": "3",
-            "answer": "PEARL"
+            "answer": "FACED"
         },
         {
-            "text": "Scolding word to a dog",
+            "text": "Cry loudly",
             "direction": 1,
             "number": "4",
-            "answer": "BAD"
+            "answer": "SOB"
         },
         {
-            "text": "\"Sure thing!\"",
+            "text": "Director Guillermo ___ Toro",
             "direction": 1,
             "number": "5",
-            "answer": "YES"
+            "answer": "DEL"
         }
     ],
     "cells": [
@@ -70,21 +70,21 @@
             "j": 0
         },
         {
-            "letter": "P",
+            "letter": "E",
             "isBlack": false,
             "number": "1",
             "i": 0,
             "j": 1
         },
         {
-            "letter": "E",
+            "letter": "L",
             "isBlack": false,
             "number": "2",
             "i": 0,
             "j": 2
         },
         {
-            "letter": "P",
+            "letter": "F",
             "isBlack": false,
             "number": "3",
             "i": 0,
@@ -98,63 +98,63 @@
             "j": 4
         },
         {
-            "letter": "B",
+            "letter": "S",
             "isBlack": false,
             "number": "4",
             "i": 1,
             "j": 0
         },
         {
-            "letter": "O",
+            "letter": "Q",
             "isBlack": false,
             "number": -1,
             "i": 1,
             "j": 1
         },
         {
-            "letter": "G",
+            "letter": "U",
             "isBlack": false,
             "number": -1,
             "i": 1,
             "j": 2
         },
         {
-            "letter": "E",
+            "letter": "A",
             "isBlack": false,
             "number": -1,
             "i": 1,
             "j": 3
         },
         {
-            "letter": "Y",
+            "letter": "D",
             "isBlack": false,
             "number": "5",
             "i": 1,
             "j": 4
         },
         {
-            "letter": "A",
+            "letter": "O",
             "isBlack": false,
             "number": "6",
             "i": 2,
             "j": 0
         },
         {
-            "letter": "L",
+            "letter": "U",
             "isBlack": false,
             "number": -1,
             "i": 2,
             "j": 1
         },
         {
-            "letter": "G",
+            "letter": "N",
             "isBlack": false,
             "number": -1,
             "i": 2,
             "j": 2
         },
         {
-            "letter": "A",
+            "letter": "C",
             "isBlack": false,
             "number": -1,
             "i": 2,
@@ -168,35 +168,35 @@
             "j": 4
         },
         {
-            "letter": "D",
+            "letter": "B",
             "isBlack": false,
             "number": "7",
             "i": 3,
             "j": 0
         },
         {
-            "letter": "O",
+            "letter": "A",
             "isBlack": false,
             "number": -1,
             "i": 3,
             "j": 1
         },
         {
-            "letter": "O",
+            "letter": "G",
             "isBlack": false,
             "number": -1,
             "i": 3,
             "j": 2
         },
         {
-            "letter": "R",
+            "letter": "E",
             "isBlack": false,
             "number": -1,
             "i": 3,
             "j": 3
         },
         {
-            "letter": "S",
+            "letter": "L",
             "isBlack": false,
             "number": -1,
             "i": 3,
@@ -210,21 +210,21 @@
             "j": 0
         },
         {
-            "letter": "S",
+            "letter": "L",
             "isBlack": false,
             "number": "8",
             "i": 4,
             "j": 1
         },
         {
-            "letter": "N",
+            "letter": "E",
             "isBlack": false,
             "number": -1,
             "i": 4,
             "j": 2
         },
         {
-            "letter": "L",
+            "letter": "D",
             "isBlack": false,
             "number": -1,
             "i": 4,

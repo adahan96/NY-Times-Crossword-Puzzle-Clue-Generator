@@ -1,231 +1,231 @@
 {
     "clues": [
         {
-            "text": "Chess piece",
+            "text": "This Across answer, in order",
             "direction": 0,
             "number": "1",
-            "answer": "ROOK"
+            "answer": "FIRST"
         },
         {
-            "text": "CAT scan alternative",
+            "text": "Inbox pileup",
             "direction": 0,
             "number": "6",
-            "answer": "MRI"
+            "answer": "EMAIL"
         },
         {
-            "text": "Chess piece",
+            "text": "This Across answer, in order",
             "direction": 0,
             "number": "7",
-            "answer": "QUEEN"
+            "answer": "THIRD"
         },
         {
-            "text": "Trendy boot brand",
+            "text": "App hiree",
+            "direction": 0,
+            "number": "8",
+            "answer": "CODER"
+        },
+        {
+            "text": "Abbr. after Brooklyn or Washington, in New York City neighborhood names",
             "direction": 0,
             "number": "9",
-            "answer": "UGG"
+            "answer": "HTS"
         },
         {
-            "text": "Fictional captain who said \"Thou damned whale!\"",
-            "direction": 0,
-            "number": "10",
-            "answer": "AHAB"
+            "text": "Game played with a dog",
+            "direction": 1,
+            "number": "1",
+            "answer": "FETCH"
         },
         {
-            "text": "Last Greek letter",
+            "text": "Words said while fanning oneself",
             "direction": 1,
             "number": "2",
-            "answer": "OMEGA"
+            "answer": "IMHOT"
         },
         {
-            "text": "Sought-after rock",
+            "text": "Midnight visits to the refrigerator",
             "direction": 1,
             "number": "3",
-            "answer": "ORE"
+            "answer": "RAIDS"
         },
         {
-            "text": "Chess piece",
+            "text": "What to call a king",
             "direction": 1,
             "number": "4",
-            "answer": "KING"
+            "answer": "SIRE"
         },
         {
-            "text": "Greenish-blue hue",
+            "text": "\"For those who want a summary,\" in internet shorthand",
             "direction": 1,
             "number": "5",
-            "answer": "AQUA"
-        },
-        {
-            "text": "\"This is the worst!\"",
-            "direction": 1,
-            "number": "8",
-            "answer": "UGH"
+            "answer": "TLDR"
         }
     ],
     "cells": [
         {
-            "letter": "",
-            "isBlack": true,
-            "number": -1,
+            "letter": "F",
+            "isBlack": false,
+            "number": "1",
             "i": 0,
             "j": 0
         },
         {
-            "letter": "R",
+            "letter": "I",
             "isBlack": false,
-            "number": "1",
+            "number": "2",
             "i": 0,
             "j": 1
         },
         {
-            "letter": "O",
+            "letter": "R",
             "isBlack": false,
-            "number": "2",
+            "number": "3",
             "i": 0,
             "j": 2
         },
         {
-            "letter": "O",
+            "letter": "S",
             "isBlack": false,
-            "number": "3",
+            "number": "4",
             "i": 0,
             "j": 3
         },
         {
-            "letter": "K",
+            "letter": "T",
             "isBlack": false,
-            "number": "4",
+            "number": "5",
             "i": 0,
             "j": 4
         },
         {
-            "letter": "A",
+            "letter": "E",
             "isBlack": false,
-            "number": "5",
+            "number": "6",
             "i": 1,
             "j": 0
         },
         {
-            "letter": "",
-            "isBlack": true,
+            "letter": "M",
+            "isBlack": false,
             "number": -1,
             "i": 1,
             "j": 1
         },
         {
-            "letter": "M",
-            "isBlack": false,
-            "number": "6",
-            "i": 1,
-            "j": 2
-        },
-        {
-            "letter": "R",
+            "letter": "A",
             "isBlack": false,
             "number": -1,
             "i": 1,
-            "j": 3
+            "j": 2
         },
         {
             "letter": "I",
             "isBlack": false,
             "number": -1,
             "i": 1,
+            "j": 3
+        },
+        {
+            "letter": "L",
+            "isBlack": false,
+            "number": -1,
+            "i": 1,
             "j": 4
         },
         {
-            "letter": "Q",
+            "letter": "T",
             "isBlack": false,
             "number": "7",
             "i": 2,
             "j": 0
         },
         {
-            "letter": "U",
+            "letter": "H",
             "isBlack": false,
-            "number": "8",
+            "number": -1,
             "i": 2,
             "j": 1
         },
         {
-            "letter": "E",
+            "letter": "I",
             "isBlack": false,
             "number": -1,
             "i": 2,
             "j": 2
         },
         {
-            "letter": "E",
+            "letter": "R",
             "isBlack": false,
             "number": -1,
             "i": 2,
             "j": 3
         },
         {
-            "letter": "N",
+            "letter": "D",
             "isBlack": false,
             "number": -1,
             "i": 2,
             "j": 4
         },
         {
-            "letter": "U",
+            "letter": "C",
             "isBlack": false,
-            "number": "9",
+            "number": "8",
             "i": 3,
             "j": 0
         },
         {
-            "letter": "G",
+            "letter": "O",
             "isBlack": false,
             "number": -1,
             "i": 3,
             "j": 1
         },
         {
-            "letter": "G",
+            "letter": "D",
             "isBlack": false,
             "number": -1,
             "i": 3,
+            "j": 2
+        },
+        {
+            "letter": "E",
+            "isBlack": false,
+            "number": -1,
+            "i": 3,
+            "j": 3
+        },
+        {
+            "letter": "R",
+            "isBlack": false,
+            "number": -1,
+            "i": 3,
+            "j": 4
+        },
+        {
+            "letter": "H",
+            "isBlack": false,
+            "number": "9",
+            "i": 4,
+            "j": 0
+        },
+        {
+            "letter": "T",
+            "isBlack": false,
+            "number": -1,
+            "i": 4,
+            "j": 1
+        },
+        {
+            "letter": "S",
+            "isBlack": false,
+            "number": -1,
+            "i": 4,
             "j": 2
         },
         {
             "letter": "",
             "isBlack": true,
-            "number": -1,
-            "i": 3,
-            "j": 3
-        },
-        {
-            "letter": "G",
-            "isBlack": false,
-            "number": -1,
-            "i": 3,
-            "j": 4
-        },
-        {
-            "letter": "A",
-            "isBlack": false,
-            "number": "10",
-            "i": 4,
-            "j": 0
-        },
-        {
-            "letter": "H",
-            "isBlack": false,
-            "number": -1,
-            "i": 4,
-            "j": 1
-        },
-        {
-            "letter": "A",
-            "isBlack": false,
-            "number": -1,
-            "i": 4,
-            "j": 2
-        },
-        {
-            "letter": "B",
-            "isBlack": false,
             "number": -1,
             "i": 4,
             "j": 3
