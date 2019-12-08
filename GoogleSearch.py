@@ -9,7 +9,8 @@ def didyoumean(word):
     soup = BeautifulSoup(source, "html.parser")
     res = soup.find('div', class_="med")
 
-    if res.text == ' ':
+    if res.text == '  ':
         return word
     else:
+
         return res.text.replace('Bunu mu demek istediniz? ','')
