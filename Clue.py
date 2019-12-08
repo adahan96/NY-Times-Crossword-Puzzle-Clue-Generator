@@ -6,7 +6,7 @@ from Finders.ExampleSentenceFinder import findExampleSentence
 from Finders.HomonymFinder import findHomonym
 from Finders.SpinnerFinder import findSpinner
 from Finders.DatamuseFinder import findFromDatamuse
-from Finders.Wordnet import Wordnet as WT
+from Finders.Wordnet import Wordnet
 
 
 class Clue:
@@ -16,8 +16,10 @@ class Clue:
         self.newClues = []
         self.definitions = []
         self.synonyms = []
+        self.antonyms = []
         self.example_sentences = []
         self.spinner = []
+        self.newClues = []
 
     def generateNewClues(self):
         def run_io_tasks_in_parallel(tasks):
@@ -30,10 +32,7 @@ class Clue:
             self.lookUpDictionaries,
             self.findFromWordnet,
             self.findAntonym,
-            self.findExampleSentence,
-            self.findHomonym,
-            self.findSpinner,
-            self.searchDatamuse
+            self.findExampleSentence
         ])
 
     def filterNewClues(self):
@@ -51,30 +50,24 @@ class Clue:
     def lookUpDictionaries(self):
         result = findDefinitionFromDictionary(self.answer)
         if result is not None:
-            self.newClues.append(result)
+            self.definitions.append(result)
 
     def findFromWordnet(self):
-        wordnet = WT()
-        wordnet.findClues(self.answer)
+        print()
+        Wordnet.findFromWordnet(self.answer, self.synonyms, self.antonyms, self.definitions, self.example_sentences)
+        print()
+        # if result is not None:
+        #    self.newClues.append(result)
 
-        """
-        if result is not None:
-            self.newClues.append(result)
-        """
     def findAntonym(self):
         result = findAntonym(self.answer)
         if result is not None:
-            self.newClues.append(result)
+            self.antonyms.append(result)
 
     def findExampleSentence(self):
         result = findExampleSentence(self.answer)
         if result is not None:
-            self.newClues.append(result)
-
-    def findHomonym(self):
-        result = findHomonym(self.answer)
-        if result is not None:
-            self.newClues.append(result)
+            self.example_sentences.append(result)
 
     def findSpinner(self):
         result = findSpinner(self.realClue)
