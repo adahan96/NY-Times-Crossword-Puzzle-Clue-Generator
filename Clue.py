@@ -23,7 +23,7 @@ class Clue:
         self.newClues = []
 
         # Initialization
-        self.nlp = spacy.load('en')
+        self.nlp = spacy.load('en_core_web_sm')
 
     def generateNewClues(self):
         def run_io_tasks_in_parallel(tasks):
@@ -95,6 +95,8 @@ class Clue:
     def preprocess_clues(self):
         self.preprocess_example_sentences()
         self.preprocess_antonyms()
+        self.preprocess_synonyms()
+        self.preprocess_definitions()
 
     def preprocess_example_sentences(self):
         for exs in self.example_sentences:
@@ -104,8 +106,20 @@ class Clue:
 
                 print('Answer not in example sentence')
 
+    def preprocess_definitions(self):
+        for definition in self.definitions:
+            if len(definition.split(' ')) < 9 and self.answer not in definition:
+                self.newClues.append(definition)
+        print('')
+
     def preprocess_antonyms(self):
         for antonym in self.antonyms:
             new_antonym = 'Opposite of ' + antonym
             self.newClues.append(new_antonym)
-        print('')
+
+    def preprocess_synonyms(self):
+        for synonym in self.synonyms:
+            if synonym.find(self.answer) == -1:
+                self.newClues.append(synonym)
+            else:
+                pass

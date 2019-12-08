@@ -1,6 +1,7 @@
 import pymongo
 from Clue import Clue
-
+import warnings
+warnings.filterwarnings("ignore")
 
 def getPuzzleFromDB(date):
     """Downloads puzzle from cloud db
