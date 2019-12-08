@@ -19,7 +19,7 @@ class Cell:
 
 driver_path = "./chromedriver.exe"
 driver = webdriver.Chrome()
-driver.fullscreen_window()
+#driver.fullscreen_window()
 #driver.fullscreen_window()
 driver.get('https://www.nytimes.com/crosswords/game/mini/')
 driver.implicitly_wait(100)
@@ -149,7 +149,7 @@ driver.close()
 
 driver2 = webdriver.Chrome()
 driver2.get('http://localhost:3131/')
-driver2.fullscreen_window()
+#driver2.fullscreen_window()
 driver2.implicitly_wait(100)
 driver2.find_element_by_id('revealButton').click()
 #file://

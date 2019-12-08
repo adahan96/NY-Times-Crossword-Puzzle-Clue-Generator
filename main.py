@@ -23,7 +23,7 @@ def getPuzzleFromDB(date):
         client.close()
 
 
-date = "2019-12-04"
+date = "2019-12-06"
 puzzle = getPuzzleFromDB(date)
 if puzzle is None:
     raise LookupError(f"Cannot find the puzzle of day {date}")
