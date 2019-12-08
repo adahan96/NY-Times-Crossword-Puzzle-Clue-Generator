@@ -9,18 +9,31 @@ const fs = require("fs");
 app.use(express.static("public"));
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function(request, response) {
+app.get("/", function (request, response) {
   response.sendFile(__dirname + "/views/index.html");
 });
 
-app.get("/adahan", function(request, response) {
+app.get("/adahan", function (request, response) {
   response.sendFile(__dirname + "/views/index.html");
 });
 
-app.get('/data', (req, res) => res.json(JSON.parse(fs.readFileSync("data.json", 'utf8'))));
+app.get('/data', (req, res) => {
+  var exec = require('child_process').exec;
+  exec("source .env/bin/activate && python main.py", {
+    cwd: ".."
+  },
+    function (error, stdout, stderr) {
+      console.log('stdout: ' + stdout);
+      console.log('stderr: ' + stderr);
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
+      res.json(JSON.parse(fs.readFileSync("data.json", 'utf8')))
+    });
+});
 
 
 // listen for requests :)
-const listener = app.listen(3131, function() {
+const listener = app.listen(3131, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });

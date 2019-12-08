@@ -1,6 +1,7 @@
 import pymongo
 from Clue import Clue
 import warnings
+import json
 warnings.filterwarnings("ignore")
 
 def getPuzzleFromDB(date):
@@ -24,7 +25,7 @@ def getPuzzleFromDB(date):
         client.close()
 
 
-date = "2019-12-06"
+date = "2019-12-08"
 puzzle = getPuzzleFromDB(date)
 if puzzle is None:
     raise LookupError(f"Cannot find the puzzle of day {date}")
@@ -38,5 +39,8 @@ for rawClue in puzzle["clues"]:
         f"Selected random clue: {randomClue} ---- Real clue: {rawClue['text']} ---- Answer: {rawClue['answer']}")
     print()
 
-    # Replace real clue with new clue
-    rawClue["text"] = randomClue
+    # Append new clue
+    rawClue["newClue"] = randomClue
+
+with open('app/data.json', 'w', encoding='utf-8') as f:
+    json.dump(puzzle, f, ensure_ascii=False, indent=4)
