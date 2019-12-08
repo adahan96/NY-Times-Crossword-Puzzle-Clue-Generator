@@ -23,7 +23,7 @@ def getPuzzleFromDB(date):
         client.close()
 
 
-date = "2019-11-28"
+date = "2019-12-04"
 puzzle = getPuzzleFromDB(date)
 if puzzle is None:
     raise LookupError(f"Cannot find the puzzle of day {date}")
@@ -35,6 +35,7 @@ for rawClue in puzzle["clues"]:
     randomClue = clue.getRandomNewClue()
     print(
         f"Selected random clue: {randomClue} ---- Real clue: {rawClue['text']} ---- Answer: {rawClue['answer']}")
+    print()
 
     # Replace real clue with new clue
     rawClue["text"] = randomClue

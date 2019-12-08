@@ -5,13 +5,15 @@ from Finders.DictionaryFinder import findDefinitionFromDictionary
 from Finders.ExampleSentenceFinder import findExampleSentence
 from Finders.HomonymFinder import findHomonym
 from Finders.SynonymFinder import findSynonym
+from Finders.SpinnerFinder import findSpinner
+from Finders.DatamuseFinder import findFromDatamuse
 
 
 class Clue:
     def __init__(self, realClue, answer):
         self.realClue = realClue
         self.answer = answer
-        self.newClues = ["An example new clue"]
+        self.newClues = []
 
     def generateNewClues(self):
         def run_io_tasks_in_parallel(tasks):
@@ -25,7 +27,9 @@ class Clue:
             self.findSynonym,
             self.findAntonym,
             self.findExampleSentence,
-            self.findHomonym
+            self.findHomonym,
+            self.findSpinner,
+            self.searchDatamuse
         ])
 
     def filterNewClues(self):
@@ -35,10 +39,13 @@ class Clue:
         print("Filtering new clues not yet implemented")
 
     def getRandomNewClue(self):
-        return random.choice(self.newClues)
+        if len(self.newClues) == 0:
+            return None
+        else:
+            return random.choice(self.newClues)
 
     def lookUpDictionaries(self):
-        result = findDefinitionFromDictionary(self.realClue)
+        result = findDefinitionFromDictionary(self.answer)
         if result is not None:
             self.newClues.append(result)
 
@@ -59,5 +66,15 @@ class Clue:
 
     def findHomonym(self):
         result = findHomonym(self.realClue)
+        if result is not None:
+            self.newClues.append(result)
+
+    def findSpinner(self):
+        result = findSpinner(self.realClue)
+        if result is not None:
+            self.newClues.append(result)
+
+    def searchDatamuse(self):
+        result = findFromDatamuse(self.answer)
         if result is not None:
             self.newClues.append(result)
