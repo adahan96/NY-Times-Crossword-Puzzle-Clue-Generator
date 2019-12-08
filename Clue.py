@@ -36,6 +36,7 @@ class Clue:
             self.findSpinner,
             self.searchDatamuse
         ])
+        self.preprocess_clues()
 
     def filterNewClues(self):
         """New clues that are similar to real clue should be removed from
@@ -55,11 +56,7 @@ class Clue:
             self.definitions.append(result)
 
     def findFromWordnet(self):
-        print()
         Wordnet.findFromWordnet(self.answer, self.synonyms, self.antonyms, self.definitions, self.example_sentences)
-        print()
-        # if result is not None:
-        #    self.newClues.append(result)
 
     def findAntonym(self):
         result = findAntonym(self.answer)
@@ -80,3 +77,21 @@ class Clue:
         result = findFromDatamuse(self.answer)
         if result is not None:
             self.newClues.append(result)
+
+    def preprocess_clues(self):
+        self.preprocess_example_sentences()
+        self.preprocess_antonyms()
+
+    def preprocess_example_sentences(self):
+        for exs in self.example_sentences:
+            if self.answer.lower() in exs:
+                self.newClues.append(exs.replace(self.answer.lower(), '___'))
+            else:
+
+                print('Answer not in example sentence')
+
+    def preprocess_antonyms(self):
+        for antonym in self.antonyms:
+            new_antonym = 'Opposite of ' + antonym
+            self.newClues.append(new_antonym)
+        print('')
