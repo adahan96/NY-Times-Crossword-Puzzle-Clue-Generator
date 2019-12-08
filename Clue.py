@@ -65,6 +65,8 @@ class Clue:
 
     def getRandomNewClue(self):
         if len(self.newClues) == 0:
+
+            print('')
             return None
         else:
             return random.choice(list(self.newClues))
