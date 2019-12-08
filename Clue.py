@@ -1,4 +1,5 @@
 import random
+import spacy
 from concurrent.futures import ThreadPoolExecutor
 from Finders.AntonymFinder import findAntonym
 from Finders.DictionaryFinder import findDefinitionFromDictionary
@@ -21,6 +22,9 @@ class Clue:
         self.spinner = []
         self.newClues = []
 
+        # Initialization
+        self.nlp = spacy.load('en')
+
     def generateNewClues(self):
         def run_io_tasks_in_parallel(tasks):
             with ThreadPoolExecutor() as executor:
@@ -41,7 +45,17 @@ class Clue:
         """New clues that are similar to real clue should be removed from
         newClues list
         """
-        print("Filtering new clues not yet implemented")
+        threshold = 0.45
+
+        realClue_nlp = self.nlp(self.realClue)
+        filteredClues = []
+        for clue in self.newClues:
+            clue_nlp = self.nlp(clue)
+            similarity_percent = realClue_nlp.similarity(clue_nlp)
+            if similarity_percent < threshold:
+                filteredClues.append(clue)
+
+        self.newClues = filteredClues
 
     def getRandomNewClue(self):
         if len(self.newClues) == 0:
