@@ -4,14 +4,17 @@ from Finders.AntonymFinder import findAntonym
 from Finders.DictionaryFinder import findDefinitionFromDictionary
 from Finders.ExampleSentenceFinder import findExampleSentence
 from Finders.HomonymFinder import findHomonym
-from Finders.SynonymFinder import findSynonym
+import Finders.Wordnet as WT
 
 
 class Clue:
     def __init__(self, realClue, answer):
         self.realClue = realClue
         self.answer = answer
-        self.newClues = ["An example new clue"]
+        self.definitions = []
+        self.synonyms = []
+        self.example_sentences = []
+        self.spinner = []
 
     def generateNewClues(self):
         def run_io_tasks_in_parallel(tasks):
@@ -22,7 +25,7 @@ class Clue:
 
         run_io_tasks_in_parallel([
             self.lookUpDictionaries,
-            self.findSynonym,
+            self.findFromWordnet,
             self.findAntonym,
             self.findExampleSentence,
             self.findHomonym
@@ -42,8 +45,10 @@ class Clue:
         if result is not None:
             self.newClues.append(result)
 
-    def findSynonym(self):
-        result = findSynonym(self.answer)
+    def findFromWordnet(self):
+        wordnet = WT.Wordnet()
+        wordnet.findClues(self.answer)
+
         if result is not None:
             self.newClues.append(result)
 
