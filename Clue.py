@@ -38,26 +38,26 @@ class Clue:
         return random.choice(self.newClues)
 
     def lookUpDictionaries(self):
-        result = findDefinitionFromDictionary(self.realClue)
+        result = findDefinitionFromDictionary(self.answer)
         if result is not None:
             self.newClues.append(result)
 
     def findSynonym(self):
-        result = findSynonym(self.realClue)
+        result = findSynonym(self.answer)
         if result is not None:
             self.newClues.append(result)
 
     def findAntonym(self):
-        result = findAntonym(self.realClue)
+        result = findAntonym(self.answer)
         if result is not None:
             self.newClues.append(result)
 
     def findExampleSentence(self):
-        result = findExampleSentence(self.realClue)
+        result = findExampleSentence(self.answer)
         if result is not None:
             self.newClues.append(result)
 
     def findHomonym(self):
-        result = findHomonym(self.realClue)
+        result = findHomonym(self.answer)
         if result is not None:
             self.newClues.append(result)
