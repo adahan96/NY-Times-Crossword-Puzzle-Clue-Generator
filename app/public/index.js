@@ -1,3 +1,9 @@
+$body = $("body");
+
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+     ajaxStop: function() { $body.removeClass("loading"); }    
+});
 
 $.get("data", function (data) {
     console.log(data);
@@ -12,10 +18,10 @@ $.get("data", function (data) {
         clue = clues[i]
 
         if (clue.direction === 0) { // Across
-            html = '<dd class="crossword-clues__list-item crossword-clues__list-item--across-' + clue.number + '" data-number="' + clue.number + '">' + clue.text + '</dd>'
+            html = '<dd class="crossword-clues__list-item crossword-clues__list-item--across-' + clue.number + '" data-number="' + clue.number + '">' + clue.text + '<br>' + '<font color="red">' + clue.newClue + '</font>' + '</dd>'
             acrossCluesDiv.append(html)
         } else { // Down
-            html = '<dd class="crossword-clues__list-item crossword-clues__list-item--down-' + clue.number + '" data-number="' + clue.number + '">' + clue.text + '</dd>'
+            html = '<dd class="crossword-clues__list-item crossword-clues__list-item--down-' + clue.number + '" data-number="' + clue.number + '">' + clue.text + '<br>' + '<font color="red">' + clue.newClue + '</font>' + '</dd>'
             downCluesDiv.append(html)
         }
     }
@@ -44,32 +50,31 @@ $.get("data", function (data) {
             labelsDiv.append(html)
         }
     }
+
+    reveal()
 })
 
 // Set date
-n =  new Date();
+n = new Date();
 y = n.getFullYear();
 m = n.getMonth() + 1;
 d = n.getDate();
 $("#date").html(m + "/" + d + "/" + y)
 
-function reveal()
-{
+function reveal() {
     cellsDiv = $("#cellsDiv")
-    $.get("data", function (data) {
-        // Append cells
-        for (i = 0; i < cells.length; i++) {
-            cell = cells[i]
-    
-            html = ''
-            if (cell.isBlack) { // Black cell
-                html = '<span class="crossword-board__item--blank" id="item' + (cell.i + 1) + '-' + (cell.j + 1) + '"></span>'
-            } else { // Letter
-                html = '<input value="" id="item' + (cell.i + 1) + '-' + (cell.j + 1) + '" class="crossword-board__item" type="text" minlength="1" maxlength="1" pattern="^[' + cell.letter + ']{1}$" required="required" value="" />'
-                htmlRevealed = '<input value="' + cell.letter + '" id="item' + (cell.i + 1) + '-' + (cell.j + 1) + '" class="crossword-board__item" type="text" minlength="1" maxlength="1" pattern="^[' + cell.letter + ']{1}$" required="required" value="" />'
-                tmp = "item" + (cell.i + 1) + "-" + (cell.j + 1)
-                $("#" + tmp).replaceWith(htmlRevealed)
-            }   
+    // Append cells
+    for (i = 0; i < cells.length; i++) {
+        cell = cells[i]
+
+        html = ''
+        if (cell.isBlack) { // Black cell
+            html = '<span class="crossword-board__item--blank" id="item' + (cell.i + 1) + '-' + (cell.j + 1) + '"></span>'
+        } else { // Letter
+            html = '<input value="" id="item' + (cell.i + 1) + '-' + (cell.j + 1) + '" class="crossword-board__item" type="text" minlength="1" maxlength="1" pattern="^[' + cell.letter + ']{1}$" required="required" value="" />'
+            htmlRevealed = '<input value="' + cell.letter + '" id="item' + (cell.i + 1) + '-' + (cell.j + 1) + '" class="crossword-board__item" type="text" minlength="1" maxlength="1" pattern="^[' + cell.letter + ']{1}$" required="required" value="" />'
+            tmp = "item" + (cell.i + 1) + "-" + (cell.j + 1)
+            $("#" + tmp).replaceWith(htmlRevealed)
         }
-    })
+    }
 }
