@@ -1,217 +1,228 @@
 {
+    "_id": "2019-12-08",
     "clues": [
         {
-            "text": "Hands-on science class",
+            "text": "\"Now I get it!\"",
             "direction": 0,
             "number": "1",
-            "answer": "LAB"
+            "answer": "AHA",
+            "newClue": "Aah"
         },
         {
-            "text": "Office note",
+            "text": "With 5-Down, much-buzzed-about character on Disney Plus's \"The Mandalorian\"",
             "direction": 0,
             "number": "4",
-            "answer": "MEMO"
+            "answer": "BABY",
+            "newClue": "The ___ began to cry again"
         },
         {
-            "text": "Meditation masters",
-            "direction": 0,
-            "number": "5",
-            "answer": "YOGIS"
-        },
-        {
-            "text": "Not quite right",
+            "text": "Ask overly invasive questions",
             "direction": 0,
             "number": "6",
-            "answer": "AMISS"
+            "answer": "SNOOP",
+            "newClue": "Stag"
         },
         {
-            "text": "Like number wonks, informally",
+            "text": "Bro",
             "direction": 0,
-            "number": "7",
-            "answer": "MATHY"
+            "number": "8",
+            "answer": "DUDE",
+            "newClue": "Sheik"
         },
         {
-            "text": "Authentic",
+            "text": "Graffiti signature",
+            "direction": 0,
+            "number": "9",
+            "answer": "TAG",
+            "newClue": "Chase after"
+        },
+        {
+            "text": "Muscles exercised when doing a Russian twist",
             "direction": 1,
             "number": "1",
-            "answer": "LEGIT"
+            "answer": "ABS",
+            "newClue": "Group ab"
         },
         {
-            "text": "___ Country, area of south-central Pennsylvania",
+            "text": "Round of applause",
             "direction": 1,
             "number": "2",
-            "answer": "AMISH"
+            "answer": "HAND",
+            "newClue": null
         },
         {
-            "text": "Domineering",
+            "text": "Give or take",
             "direction": 1,
             "number": "3",
-            "answer": "BOSSY"
+            "answer": "ABOUT",
+            "newClue": null
         },
         {
-            "text": "N.Y.C. home of Warhol's \"Campbell's Soup Cans\"",
-            "direction": 1,
-            "number": "4",
-            "answer": "MOMA"
-        },
-        {
-            "text": "Thanksgiving vegetable",
+            "text": "See 4-Across",
             "direction": 1,
             "number": "5",
-            "answer": "YAM"
+            "answer": "YODA",
+            "newClue": "Darth vader"
+        },
+        {
+            "text": "Coat rack part",
+            "direction": 1,
+            "number": "7",
+            "answer": "PEG",
+            "newClue": "Succeed in obtaining a position"
         }
     ],
     "cells": [
         {
-            "letter": "",
-            "isBlack": true,
-            "number": -1,
+            "letter": "A",
+            "isBlack": false,
+            "number": "1",
             "i": 0,
             "j": 0
         },
         {
-            "letter": "",
-            "isBlack": true,
-            "number": -1,
+            "letter": "H",
+            "isBlack": false,
+            "number": "2",
             "i": 0,
             "j": 1
-        },
-        {
-            "letter": "L",
-            "isBlack": false,
-            "number": "1",
-            "i": 0,
-            "j": 2
         },
         {
             "letter": "A",
             "isBlack": false,
-            "number": "2",
-            "i": 0,
-            "j": 3
-        },
-        {
-            "letter": "B",
-            "isBlack": false,
             "number": "3",
             "i": 0,
-            "j": 4
+            "j": 2
         },
         {
             "letter": "",
             "isBlack": true,
             "number": -1,
+            "i": 0,
+            "j": 3
+        },
+        {
+            "letter": "",
+            "isBlack": true,
+            "number": -1,
+            "i": 0,
+            "j": 4
+        },
+        {
+            "letter": "B",
+            "isBlack": false,
+            "number": "4",
             "i": 1,
             "j": 0
         },
         {
-            "letter": "M",
+            "letter": "A",
             "isBlack": false,
-            "number": "4",
+            "number": -1,
             "i": 1,
             "j": 1
         },
         {
-            "letter": "E",
+            "letter": "B",
             "isBlack": false,
             "number": -1,
             "i": 1,
             "j": 2
-        },
-        {
-            "letter": "M",
-            "isBlack": false,
-            "number": -1,
-            "i": 1,
-            "j": 3
-        },
-        {
-            "letter": "O",
-            "isBlack": false,
-            "number": -1,
-            "i": 1,
-            "j": 4
         },
         {
             "letter": "Y",
             "isBlack": false,
             "number": "5",
+            "i": 1,
+            "j": 3
+        },
+        {
+            "letter": "",
+            "isBlack": true,
+            "number": -1,
+            "i": 1,
+            "j": 4
+        },
+        {
+            "letter": "S",
+            "isBlack": false,
+            "number": "6",
             "i": 2,
             "j": 0
+        },
+        {
+            "letter": "N",
+            "isBlack": false,
+            "number": -1,
+            "i": 2,
+            "j": 1
         },
         {
             "letter": "O",
             "isBlack": false,
             "number": -1,
             "i": 2,
-            "j": 1
-        },
-        {
-            "letter": "G",
-            "isBlack": false,
-            "number": -1,
-            "i": 2,
             "j": 2
         },
         {
-            "letter": "I",
+            "letter": "O",
             "isBlack": false,
             "number": -1,
             "i": 2,
             "j": 3
         },
         {
-            "letter": "S",
+            "letter": "P",
             "isBlack": false,
-            "number": -1,
+            "number": "7",
             "i": 2,
             "j": 4
         },
         {
-            "letter": "A",
-            "isBlack": false,
-            "number": "6",
+            "letter": "",
+            "isBlack": true,
+            "number": -1,
             "i": 3,
             "j": 0
         },
         {
-            "letter": "M",
+            "letter": "D",
             "isBlack": false,
-            "number": -1,
+            "number": "8",
             "i": 3,
             "j": 1
         },
         {
-            "letter": "I",
+            "letter": "U",
             "isBlack": false,
             "number": -1,
             "i": 3,
             "j": 2
         },
         {
-            "letter": "S",
+            "letter": "D",
             "isBlack": false,
             "number": -1,
             "i": 3,
             "j": 3
         },
         {
-            "letter": "S",
+            "letter": "E",
             "isBlack": false,
             "number": -1,
             "i": 3,
             "j": 4
         },
         {
-            "letter": "M",
-            "isBlack": false,
-            "number": "7",
+            "letter": "",
+            "isBlack": true,
+            "number": -1,
             "i": 4,
             "j": 0
         },
         {
-            "letter": "A",
-            "isBlack": false,
+            "letter": "",
+            "isBlack": true,
             "number": -1,
             "i": 4,
             "j": 1
@@ -219,19 +230,19 @@
         {
             "letter": "T",
             "isBlack": false,
-            "number": -1,
+            "number": "9",
             "i": 4,
             "j": 2
         },
         {
-            "letter": "H",
+            "letter": "A",
             "isBlack": false,
             "number": -1,
             "i": 4,
             "j": 3
         },
         {
-            "letter": "Y",
+            "letter": "G",
             "isBlack": false,
             "number": -1,
             "i": 4,

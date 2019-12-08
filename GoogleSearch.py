@@ -9,8 +9,8 @@ def didyoumean(word):
     soup = BeautifulSoup(source, "html.parser")
     res = soup.find('div', class_="med")
 
-    if res.text == '  ':
-        return word
+    if '#foot{visibility:inherit}Bunu mu demek istediniz? ' in soup.text:
+        return res.text.replace('Bunu mu demek istediniz? ', '')
     else:
+        return word
 
-        return res.text.replace('Bunu mu demek istediniz? ','')
