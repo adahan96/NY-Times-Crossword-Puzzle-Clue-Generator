@@ -1,13 +1,10 @@
 import nltk
 from nltk.corpus import wordnet as wn
 
-class Wordnet():
-    def __init__(self):
-        nltk.download('wordnet')
-
+class Wordnet:
     @staticmethod
     def findFromWordnet(word, synonyms, antonyms, definitions, examples):
-
+        nltk.download("wordnet")
         # Synonym set of the word
         synset = wn.synsets(word)
         for syn in synset:
