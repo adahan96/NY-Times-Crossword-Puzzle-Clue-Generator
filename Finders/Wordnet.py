@@ -9,8 +9,13 @@ class Wordnet:
         synset = wn.synsets(word)
         for syn in synset:
             for l in syn.lemmas():
-                synonyms.append(l.name())
+
+                synonyms.add(l.name().replace('_', " "))
                 if l.antonyms():
-                    antonyms.append(l.antonyms()[0].name())
+                    for a in l.antonyms():
+                        antonyms.add(a.name())
             definitions.append(syn.definition())
             examples += syn.examples()
+        #print('')
+
+#Wordnet.findFromWordnet('',set(),set(),[],[])

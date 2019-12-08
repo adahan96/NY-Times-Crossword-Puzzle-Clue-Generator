@@ -8,16 +8,16 @@ from Finders.HomonymFinder import findHomonym
 from Finders.SpinnerFinder import findSpinner
 from Finders.DatamuseFinder import findFromDatamuse
 from Finders.Wordnet import Wordnet
-
+from GoogleSearch import didyoumean
 
 class Clue:
     def __init__(self, realClue, answer):
         self.realClue = realClue
-        self.answer = answer
+        self.answer = didyoumean(answer)
         self.newClues = []
         self.definitions = []
-        self.synonyms = []
-        self.antonyms = []
+        self.synonyms = set()
+        self.antonyms = set()
         self.example_sentences = []
         self.spinner = []
         self.newClues = []
@@ -58,11 +58,16 @@ class Clue:
 
         self.newClues = filteredClues
 
+        # make everything lower in new clues but first letter
+        self.newClues = [clue.lower() for clue in self.newClues]
+        self.newClues = [clue.capitalize() for clue in self.newClues]
+        self.newClues = set(self.newClues)
+
     def getRandomNewClue(self):
         if len(self.newClues) == 0:
             return None
         else:
-            return random.choice(self.newClues)
+            return random.choice(list(self.newClues))
 
     def lookUpDictionaries(self):
         result = findDefinitionFromDictionary(self.answer)
@@ -75,7 +80,7 @@ class Clue:
     def findAntonym(self):
         result = findAntonym(self.answer)
         if result is not None:
-            self.antonyms.append(result)
+            self.antonyms.add(result)
 
     def findExampleSentence(self):
         result = findExampleSentence(self.answer)
@@ -103,12 +108,12 @@ class Clue:
             if self.answer.lower() in exs:
                 self.newClues.append(exs.replace(self.answer.lower(), '___'))
             else:
-
-                print('Answer not in example sentence')
+                pass
+                #print('Answer not in example sentence')
 
     def preprocess_definitions(self):
         for definition in self.definitions:
-            if len(definition.split(' ')) < 9 and self.answer not in definition:
+            if len(definition.split(' ')) < 9 and self.answer.lower() not in definition.lower():
                 self.newClues.append(definition)
         print('')
 
@@ -119,7 +124,8 @@ class Clue:
 
     def preprocess_synonyms(self):
         for synonym in self.synonyms:
-            if synonym.find(self.answer) == -1:
-                self.newClues.append(synonym)
+            l = synonym.lower()
+            if l.find(self.answer.lower()) == -1:
+                self.newClues.append(l)
             else:
                 pass
