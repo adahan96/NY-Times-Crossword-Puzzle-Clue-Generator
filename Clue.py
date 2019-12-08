@@ -32,7 +32,9 @@ class Clue:
             self.lookUpDictionaries,
             self.findFromWordnet,
             self.findAntonym,
-            self.findExampleSentence
+            self.findExampleSentence,
+            self.findSpinner,
+            self.searchDatamuse
         ])
 
     def filterNewClues(self):
