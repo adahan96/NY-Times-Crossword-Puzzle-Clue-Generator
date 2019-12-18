@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Pure CSS crossword - CSS Grid</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<div class="crossword-board-container">
+
+		<div class="crossword-board" id="cellsDiv">
+
+			<div class="crossword-board crossword-board--highlight crossword-board--highlight-down">
+				<span id="down-1"
+					class="crossword-board__item-highlight crossword-board__item-highlight--down-1"></span>
+				<span id="down-2"
+					class="crossword-board__item-highlight crossword-board__item-highlight--down-2"></span>
+
+			</div>
+
+			<div class="crossword-board crossword-board--labels" id="labelsDiv">
+			</div>
+
+			<div class="crossword-clues">
+				<dt class="crossword-clues__list-title">Across</dt>
+				<dl class="crossword-clues__list crossword-clues__list--across" id="acrossCluesDiv">
+				</dl>
+				<dt class="crossword-clues__list-title">Down</dt>
+				<dl class="crossword-clues__list crossword-clues__list--down" id="downCluesDiv">
+				</dl>
+
+			</div>
+
+			<div class="crossword-complete">
+				well done, champ!
+			</div>
+
+		</div>
+
+	</div>
+	<div style="padding-top: 650px;padding-left: 500px;">
+		<h1>CLUGEN</h1>
+		<h2 id="date"></h2>
+	</div>
+	<div class="modal">
+		<!-- Place at bottom of page -->
+	</div>
+	<script src="./index.js"></script>
+</body>
+
+
+</html>

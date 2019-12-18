@@ -4,3 +4,4 @@ dnspython==1.16.0
 requests==2.22.0
 spacy==2.2.3
 beautifulsoup4==4.8.1
+Flask==1.1.1
