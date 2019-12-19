@@ -4,23 +4,33 @@ from concurrent.futures import ThreadPoolExecutor
 from Finders.AntonymFinder import findAntonym
 from Finders.DictionaryFinder import findDefinitionFromDictionary
 from Finders.ExampleSentenceFinder import findExampleSentence
-from Finders.HomonymFinder import findHomonym
 from Finders.SpinnerFinder import findSpinner
 from Finders.DatamuseFinder import findFromDatamuse
 from Finders.MerriamWebsterFinder import findFromMWDictionary, findFromMWThesaurus
 from Finders.Wordnet import Wordnet
 from GoogleSearch import didyoumean
 
+
 class Clue:
     def __init__(self, realClue, answer):
+
+        answer = answer.lower()
+
         self.realClue = realClue
-        self.answer = didyoumean(answer)
+        self.answer = set()
+        self.answer.add(answer)
+
+        corrected_answer, is_word_corrected = didyoumean(answer)
+        if is_word_corrected:
+            self.answer.add(corrected_answer)
+
+        self.definitions = set()
         self.newClues = set()
         self.definitions = set()
         self.synonyms = set()
         self.antonyms = set()
-        self.example_sentences = []
-        self.spinner = []
+        self.example_sentences = set()
+        self.spinner = set()
 
         # Initialization
         self.nlp = spacy.load('en_core_web_sm')
@@ -48,15 +58,15 @@ class Clue:
         """New clues that are similar to real clue should be removed from
         newClues list
         """
-        threshold = 0.45
+        threshold = 0.80
 
         realClue_nlp = self.nlp(self.realClue)
-        filteredClues = []
+        filteredClues = set()
         for clue in self.newClues:
             clue_nlp = self.nlp(clue)
             similarity_percent = realClue_nlp.similarity(clue_nlp)
             if similarity_percent < threshold:
-                filteredClues.append(clue)
+                filteredClues.add(clue)
 
         self.newClues = filteredClues
 
@@ -76,10 +86,11 @@ class Clue:
     def lookUpDictionaries(self):
         result = findDefinitionFromDictionary(self.answer)
         if result is not None:
-            self.definitions.append(result)
+            self.definitions.add(result)
 
     def findFromWordnet(self):
-        Wordnet.findFromWordnet(self.answer, self.synonyms, self.antonyms, self.definitions, self.example_sentences)
+        Wordnet.findFromWordnet(
+            self.answer, self.synonyms, self.antonyms, self.definitions, self.example_sentences)
 
     def findAntonym(self):
         result = findAntonym(self.answer)
@@ -89,7 +100,7 @@ class Clue:
     def findExampleSentence(self):
         result = findExampleSentence(self.answer)
         if result is not None:
-            self.example_sentences.append(result)
+            self.example_sentences.add(result)
 
     def findSpinner(self):
         result = findSpinner(self.realClue)
@@ -97,42 +108,51 @@ class Clue:
             self.newClues.add(result)
 
     def searchDatamuse(self):
-        result = findFromDatamuse(self.answer)
-        if result is not None:
-            self.newClues.add(result)
-    
+        for answer in self.answer:
+            result = findFromDatamuse(answer)
+            if result is not None:
+                print("[DATAMUSE] Found a clue for", answer, ":", result)
+                self.newClues.add(result)
+
     def findFromMWDictionary(self):
-        definition, sentence = findFromMWDictionary(self.answer)
-        if definition is not None:
-            self.definitions.add(definition)
-        if sentence is not None:
-            self.example_sentences.append(sentence)
-    
+        for answer in self.answer:
+            definition, sentence = findFromMWDictionary(answer)
+            if definition is not None:
+                self.definitions.add(definition)
+            if sentence is not None:
+                self.example_sentences.append(sentence)
+
     def findFromMWThesaurus(self):
-        synonym, antonym = findFromMWThesaurus(self.answer)
-        if synonym is not None:
-            self.synonyms.add(synonym)
-        if antonym is not None:
-            self.antonyms.add(antonym)
+        for answer in self.answer:
+            synonym, antonym = findFromMWThesaurus(answer)
+            if synonym is not None:
+                self.synonyms.add(synonym)
+            if antonym is not None:
+                self.antonyms.add(antonym)
 
     def preprocess_clues(self):
         self.preprocess_example_sentences()
         self.preprocess_antonyms()
         self.preprocess_synonyms()
         self.preprocess_definitions()
+        self.newClueprocess()
 
     def preprocess_example_sentences(self):
-        for exs in self.example_sentences:
-            if self.answer.lower() in exs:
-                self.newClues.add(exs.replace(self.answer.lower(), '___'))
-            else:
-                pass
-                #print('Answer not in example sentence')
+        max_word_number = 13
+        for answer in self.answer:
+            for exs in self.example_sentences:
+                if answer.lower() in exs and len(exs.split(' ')) < max_word_number:
+                    self.newClues.add(exs.replace(answer.lower(), '___'))
+                else:
+                    pass
+                    #print('Answer not in example sentence')
 
     def preprocess_definitions(self):
+        ayberk_magic = 13
         for definition in self.definitions:
-            if len(definition.split(' ')) < 9 and self.answer.lower() not in definition.lower():
-                self.newClues.add(definition)
+            for answer in self.answer:
+                if len(definition.split(' ')) < ayberk_magic and answer.lower() not in definition.lower():
+                    self.newClues.add(definition)
         print('')
 
     def preprocess_antonyms(self):
@@ -143,7 +163,34 @@ class Clue:
     def preprocess_synonyms(self):
         for synonym in self.synonyms:
             l = synonym.lower()
-            if l.find(self.answer.lower()) == -1:
-                self.newClues.add(l)
-            else:
-                pass
+            for answer in self.answer:
+                if l.find(answer.lower()) == -1:
+                    self.newClues.add(l)
+                else:
+                    pass
+
+    def newClueprocess(self):
+
+        print("*" * 10)
+        print(self.newClues)
+
+        processed_clues = set()
+        for clue in self.newClues:
+            clue = clue.lower()
+            clue_splitted = clue.split(' ')
+
+            for answer in self.answer:
+
+                word_flag = True
+
+                for c in clue_splitted:
+                    if c in answer.lower() or answer.lower() in c:
+                        word_flag = False
+
+                if word_flag:
+                    processed_clues.add(clue)
+
+        self.newClues = processed_clues
+
+        print("-" * 10)
+        print(self.newClues)

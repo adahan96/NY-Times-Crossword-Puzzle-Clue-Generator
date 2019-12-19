@@ -6,7 +6,7 @@ This project aims to generate new clues for the daily puzzle of NY Times on http
 - Virtual environment (recommended)
 
 ## Install dependencies
-- `pip install -r requirements`
+- `pip install -r requirements.txt`
 - `python -m spacy download en`
 
 ## Run
@@ -18,4 +18,4 @@ This project aims to generate new clues for the daily puzzle of NY Times on http
 - [Bengi](https://github.com/Bengi370)
 - [Emre](https://github.com/sulunemre)
 - [Eray](https://github.com/eraysahin)
-- [Kazım ](https://github.com/ayberktecimer)
+- [Kazım](https://github.com/ayberktecimer)
