@@ -7,6 +7,7 @@ from Finders.ExampleSentenceFinder import findExampleSentence
 from Finders.HomonymFinder import findHomonym
 from Finders.SpinnerFinder import findSpinner
 from Finders.DatamuseFinder import findFromDatamuse
+from Finders.MerriamWebsterFinder import findFromMWDictionary, findFromMWThesaurus
 from Finders.Wordnet import Wordnet
 from GoogleSearch import didyoumean
 
@@ -37,7 +38,9 @@ class Clue:
             self.findAntonym,
             self.findExampleSentence,
             self.findSpinner,
-            self.searchDatamuse
+            self.searchDatamuse,
+            self.findFromMWDictionary,
+            self.findFromMWThesaurus
         ])
         self.preprocess_clues()
 
@@ -97,6 +100,20 @@ class Clue:
         result = findFromDatamuse(self.answer)
         if result is not None:
             self.newClues.add(result)
+    
+    def findFromMWDictionary(self):
+        definition, sentence = findFromMWDictionary(self.answer)
+        if definition is not None:
+            self.definitions.add(definition)
+        if sentence is not None:
+            self.example_sentences.append(sentence)
+    
+    def findFromMWThesaurus(self):
+        synonym, antonym = findFromMWThesaurus(self.answer)
+        if synonym is not None:
+            self.synonyms.add(synonym)
+        if antonym is not None:
+            self.antonyms.add(antonym)
 
     def preprocess_clues(self):
         self.preprocess_example_sentences()
