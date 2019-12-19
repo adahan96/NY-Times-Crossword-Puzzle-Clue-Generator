@@ -31,6 +31,12 @@ function reveal() {
     }
 }
 
+// Get date from url parameter
+var dataParameter = new URL(window.location.href).searchParams.get("date");
+if (dataParameter != null) {
+    todaysDate = dataParameter
+}
+
 $.get("newClues", { date: todaysDate }, function (data) {
     acrossCluesDiv = $("#acrossCluesDiv")
     downCluesDiv = $("#downCluesDiv")
