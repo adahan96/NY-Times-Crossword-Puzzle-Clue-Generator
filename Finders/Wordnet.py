@@ -28,11 +28,12 @@ class Wordnet:
 
                         definition = synset[i].definition()
                         print("[WORDNET] Found a definition for", word, ":", definition)
-                        definitions.append(definition)
+                        definitions.add(definition)
 
                         exs = synset[i].examples()
                         print("[WORDNET] Found example sentences for", word, ":", exs)
-                        examples += exs
+                        for e in exs:
+                            examples.add(e)
         #print('')
 
 #Wordnet.findFromWordnet('',set(),set(),[],[])
