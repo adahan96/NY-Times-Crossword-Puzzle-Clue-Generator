@@ -118,16 +118,20 @@ class Clue:
         for answer in self.answer:
             definition, sentence = findFromMWDictionary(answer)
             if definition is not None:
+                print("[MERRIAM WEBSTER] Found a definition for", answer, ":", definition)
                 self.definitions.add(definition)
             if sentence is not None:
+                print("[MERRIAM WEBSTER] Found an example sentence for", answer, ":", sentence)
                 self.example_sentences.append(sentence)
 
     def findFromMWThesaurus(self):
         for answer in self.answer:
             synonym, antonym = findFromMWThesaurus(answer)
             if synonym is not None:
+                print("[MERRIAM WEBSTER] Found a synonym for", answer, ":", synonym)
                 self.synonyms.add(synonym)
             if antonym is not None:
+                print("[MERRIAM WEBSTER] Found an antonym for", answer, ":", antonym)
                 self.antonyms.add(antonym)
 
     def preprocess_clues(self):
@@ -157,8 +161,13 @@ class Clue:
 
     def preprocess_antonyms(self):
         for antonym in self.antonyms:
-            new_antonym = 'Opposite of ' + antonym
-            self.newClues.add(new_antonym)
+            l = antonym.lower()
+            for answer in self.answer:
+                if l.find(answer.lower()) == -1:
+                    new_antonym = 'Opposite of ' + antonym
+                    self.newClues.add(new_antonym)
+                else:
+                    pass
 
     def preprocess_synonyms(self):
         for synonym in self.synonyms:
