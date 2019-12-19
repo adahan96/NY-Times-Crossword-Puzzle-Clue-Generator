@@ -14,13 +14,12 @@ class Clue:
     def __init__(self, realClue, answer):
         self.realClue = realClue
         self.answer = didyoumean(answer)
-        self.newClues = []
-        self.definitions = []
+        self.newClues = set()
+        self.definitions = set()
         self.synonyms = set()
         self.antonyms = set()
         self.example_sentences = []
         self.spinner = []
-        self.newClues = []
 
         # Initialization
         self.nlp = spacy.load('en_core_web_sm')
@@ -92,12 +91,12 @@ class Clue:
     def findSpinner(self):
         result = findSpinner(self.realClue)
         if result is not None:
-            self.newClues.append(result)
+            self.newClues.add(result)
 
     def searchDatamuse(self):
         result = findFromDatamuse(self.answer)
         if result is not None:
-            self.newClues.append(result)
+            self.newClues.add(result)
 
     def preprocess_clues(self):
         self.preprocess_example_sentences()
@@ -108,7 +107,7 @@ class Clue:
     def preprocess_example_sentences(self):
         for exs in self.example_sentences:
             if self.answer.lower() in exs:
-                self.newClues.append(exs.replace(self.answer.lower(), '___'))
+                self.newClues.add(exs.replace(self.answer.lower(), '___'))
             else:
                 pass
                 #print('Answer not in example sentence')
@@ -116,18 +115,18 @@ class Clue:
     def preprocess_definitions(self):
         for definition in self.definitions:
             if len(definition.split(' ')) < 9 and self.answer.lower() not in definition.lower():
-                self.newClues.append(definition)
+                self.newClues.add(definition)
         print('')
 
     def preprocess_antonyms(self):
         for antonym in self.antonyms:
             new_antonym = 'Opposite of ' + antonym
-            self.newClues.append(new_antonym)
+            self.newClues.add(new_antonym)
 
     def preprocess_synonyms(self):
         for synonym in self.synonyms:
             l = synonym.lower()
             if l.find(self.answer.lower()) == -1:
-                self.newClues.append(l)
+                self.newClues.add(l)
             else:
                 pass
