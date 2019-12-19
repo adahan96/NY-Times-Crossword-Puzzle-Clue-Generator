@@ -25,11 +25,13 @@ class Clue:
 
         self.newClues = []
         self.definitions = []
+        self.answer = didyoumean(answer)
+        self.newClues = set()
+        self.definitions = set()
         self.synonyms = set()
         self.antonyms = set()
         self.example_sentences = []
         self.spinner = []
-        self.newClues = []
 
         # Initialization
         self.nlp = spacy.load('en_core_web_sm')
@@ -101,7 +103,7 @@ class Clue:
     def findSpinner(self):
         result = findSpinner(self.realClue)
         if result is not None:
-            self.newClues.append(result)
+            self.newClues.add(result)
 
     def searchDatamuse(self):
         for answer in self.answer:
@@ -138,7 +140,7 @@ class Clue:
     def preprocess_antonyms(self):
         for antonym in self.antonyms:
             new_antonym = 'Opposite of ' + antonym
-            self.newClues.append(new_antonym)
+            self.newClues.add(new_antonym)
 
     def preprocess_synonyms(self):
         for synonym in self.synonyms:
