@@ -8,6 +8,7 @@ from Finders.SpinnerFinder import findSpinner
 from Finders.DatamuseFinder import findFromDatamuse
 from Finders.MerriamWebsterFinder import findFromMWDictionary, findFromMWThesaurus
 from Finders.Wordnet import Wordnet
+from Finders.UrbanDictionaryFinder import findFromUrbanDictionary
 from GoogleSearch import didyoumean
 
 
@@ -50,7 +51,8 @@ class Clue:
             self.findSpinner,
             self.searchDatamuse,
             self.findFromMWDictionary,
-            self.findFromMWThesaurus
+            self.findFromMWThesaurus,
+            self.findUrbanDictionary
         ])
         self.preprocess_clues()
 
@@ -133,6 +135,14 @@ class Clue:
             if antonym is not None:
                 print("[MERRIAM WEBSTER] Found an antonym for", answer, ":", antonym)
                 self.antonyms.add(antonym)
+
+    def findUrbanDictionary(self):
+        for answer in self.answer:
+            meaning, example = findFromUrbanDictionary(answer)
+            if meaning is not None:
+                self.definitions.add(meaning)
+            if example is not None:
+                self.example_sentences.add(example)
 
     def preprocess_clues(self):
         self.preprocess_example_sentences()
