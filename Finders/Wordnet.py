@@ -6,16 +6,33 @@ class Wordnet:
     def findFromWordnet(word, synonyms, antonyms, definitions, examples):
         nltk.download("wordnet")
         # Synonym set of the word
-        synset = wn.synsets(word)
-        for syn in synset:
-            for l in syn.lemmas():
+        for w in word:
+            synset = wn.synsets(w)
+            for i in range(len(synset)):
+                if i == 0:
 
-                synonyms.add(l.name().replace('_', " "))
-                if l.antonyms():
-                    for a in l.antonyms():
-                        antonyms.add(a.name())
-            definitions.append(syn.definition())
-            examples += syn.examples()
+                    lemma = synset[0].lemmas()[0]
+                    # for l in synset[0].lemmas():
+
+                    print('')
+                    # synonym = l.name().replace('_', " ")
+                    # print("[WORDNET] Found a synonym for", word, ":", synonym)
+                    # synonyms.add(synonym)
+                    if lemma.antonyms():
+                        for a in lemma.antonyms():
+
+                            antonym = a.name()
+                            print("[WORDNET] Found an antonym for", word, ":", antonym)
+                            antonyms.add(antonym)
+                    if i < 3:
+
+                        definition = synset[i].definition()
+                        print("[WORDNET] Found a definition for", word, ":", definition)
+                        definitions.append(definition)
+
+                        exs = synset[i].examples()
+                        print("[WORDNET] Found example sentences for", word, ":", exs)
+                        examples += exs
         #print('')
 
 #Wordnet.findFromWordnet('',set(),set(),[],[])

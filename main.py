@@ -35,6 +35,8 @@ def runNewClueGenerator(date):
         clue = Clue(rawClue["text"], rawClue["answer"])
         clue.generateNewClues()
         clue.filterNewClues()
+        print("All clues generated for", clue.answer)
+        print(clue.newClues)
         randomClue = clue.getRandomNewClue()
         print(
             f"Selected random clue: {randomClue} ---- Real clue: {rawClue['text']} ---- Answer: {rawClue['answer']}")

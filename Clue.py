@@ -12,8 +12,17 @@ from GoogleSearch import didyoumean
 
 class Clue:
     def __init__(self, realClue, answer):
+
+        answer = answer.lower()
+
         self.realClue = realClue
-        self.answer = didyoumean(answer)
+        self.answer = []
+        self.answer.append(answer)
+
+        corrected_answer, is_word_corrected = didyoumean(answer)
+        if is_word_corrected:
+            self.answer.append(corrected_answer)
+
         self.newClues = []
         self.definitions = []
         self.synonyms = set()
@@ -46,7 +55,7 @@ class Clue:
         """New clues that are similar to real clue should be removed from
         newClues list
         """
-        threshold = 0.45
+        threshold = 0.80
 
         realClue_nlp = self.nlp(self.realClue)
         filteredClues = []
@@ -95,28 +104,35 @@ class Clue:
             self.newClues.append(result)
 
     def searchDatamuse(self):
-        result = findFromDatamuse(self.answer)
-        if result is not None:
-            self.newClues.append(result)
+        for answer in self.answer:
+            result = findFromDatamuse(answer)
+            if result is not None:
+                print("[DATAMUSE] Found a clue for", answer, ":", result)
+                self.newClues.append(result)
 
     def preprocess_clues(self):
         self.preprocess_example_sentences()
         self.preprocess_antonyms()
         self.preprocess_synonyms()
         self.preprocess_definitions()
+        self.newClueprocess()
 
     def preprocess_example_sentences(self):
-        for exs in self.example_sentences:
-            if self.answer.lower() in exs:
-                self.newClues.append(exs.replace(self.answer.lower(), '___'))
-            else:
-                pass
-                #print('Answer not in example sentence')
+        max_word_number = 13
+        for answer in self.answer:
+            for exs in self.example_sentences:
+                if answer.lower() in exs and len(exs.split(' ')) < max_word_number:
+                    self.newClues.append(exs.replace(answer.lower(), '___'))
+                else:
+                    pass
+                    #print('Answer not in example sentence')
 
     def preprocess_definitions(self):
+        ayberk_magic = 13
         for definition in self.definitions:
-            if len(definition.split(' ')) < 9 and self.answer.lower() not in definition.lower():
-                self.newClues.append(definition)
+            for answer in self.answer:
+                if len(definition.split(' ')) < ayberk_magic and answer.lower() not in definition.lower():
+                    self.newClues.append(definition)
         print('')
 
     def preprocess_antonyms(self):
@@ -127,7 +143,34 @@ class Clue:
     def preprocess_synonyms(self):
         for synonym in self.synonyms:
             l = synonym.lower()
-            if l.find(self.answer.lower()) == -1:
-                self.newClues.append(l)
-            else:
-                pass
+            for answer in self.answer:
+                if l.find(answer.lower()) == -1:
+                    self.newClues.append(l)
+                else:
+                    pass
+
+    def newClueprocess(self):
+
+        print("*" * 10)
+        print(self.newClues)
+
+        processed_clues = []
+        for clue in self.newClues:
+            clue = clue.lower()
+            clue_splitted = clue.split(' ')
+
+            for answer in self.answer:
+
+                word_flag = True
+
+                for c in clue_splitted:
+                    if c in answer.lower() or answer.lower() in c:
+                        word_flag = False
+
+                if word_flag:
+                    processed_clues.append(clue)
+
+        self.newClues = processed_clues
+
+        print("-" * 10)
+        print(self.newClues)

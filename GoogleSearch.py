@@ -10,7 +10,9 @@ def didyoumean(word):
     res = soup.find('div', class_="med")
 
     if '#foot{visibility:inherit}Bunu mu demek istediniz? ' in soup.text:
-        return res.text.replace('Bunu mu demek istediniz? ', '')
+        correctedWord = res.text.replace('Bunu mu demek istediniz? ', '')
+        print("[GOOGLE'S DID YOU MEAN] Corrected the word as", correctedWord)
+        return correctedWord, True
     else:
-        return word
+        return word, False
 
