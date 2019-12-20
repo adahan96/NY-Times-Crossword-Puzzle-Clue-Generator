@@ -12,7 +12,7 @@ def findFromDatamuse(word):
     )
 
     jsonResponse = response.json()
-    if len(jsonResponse) != 0 and jsonResponse[0]["score"] >= THRESHOLD:
+    if len(jsonResponse) != 0 and "score" in jsonResponse[0] and jsonResponse[0]["score"] >= THRESHOLD:
         return jsonResponse[0]["word"]
     else:
         return None
