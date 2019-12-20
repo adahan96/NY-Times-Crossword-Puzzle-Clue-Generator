@@ -8,12 +8,17 @@ def findFromUrbanDictionary(word):
     soup = BeautifulSoup(r.content, features="html.parser")
 
     try:
-        meaning = soup.find("div", attrs={"class": "meaning"}).text
+        allMeanings = [element.text for element in soup.find_all(
+            "div", attrs={"class": "meaning"})]
+        meaning = min(allMeanings, key=len)  # Get the shortest meaning
     except Exception:
         meaning = None
 
     try:
-        exampleSentence = soup.find("div", attrs={"class": "example"}).text
+        allExampleSentences = [element.text for element in soup.find_all(
+            "div", attrs={"class": "example"})]
+        # Get the shortest example sentence
+        exampleSentence = min(allExampleSentences, key=len)
     except:
         exampleSentence = None
 
