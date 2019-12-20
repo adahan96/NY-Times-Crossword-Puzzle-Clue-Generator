@@ -1,5 +1,7 @@
 from flask import Flask, request, send_from_directory, redirect, jsonify
 from main import runNewClueGenerator
+from scraper import runScraper
+
 
 app = Flask(__name__, static_folder='public')
 
@@ -17,6 +19,9 @@ def root(path):
 @app.route("/newClues")
 def newClues():
     date = request.args.get('date')
+    print("Puzzle downloading started")
+    runScraper()
+    print("Puzzle downloading finished")
     result = runNewClueGenerator(date)
     return jsonify(result)
 
