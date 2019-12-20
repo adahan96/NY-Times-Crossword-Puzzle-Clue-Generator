@@ -48,10 +48,10 @@ $.get("newClues", { date: todaysDate }, function (data) {
         clue = clues[i]
 
         if (clue.direction === 0) { // Across
-            html = '<dd class="crossword-clues__list-item crossword-clues__list-item--across-' + clue.number + '" data-number="' + clue.number + '">' + clue.text + '<br>' + '<font color="red">' + clue.newClue + '</font>' + '</dd>'
+            html = '<dd class="crossword-clues__list-item crossword-clues__list-item--across-' + clue.number + '" data-number="' + clue.number + '">' + clue.text + '<br> NEW CLUE: ' + '<font color="red">' + clue.newClue + '</font>' + '</dd>'
             acrossCluesDiv.append(html)
         } else { // Down
-            html = '<dd class="crossword-clues__list-item crossword-clues__list-item--down-' + clue.number + '" data-number="' + clue.number + '">' + clue.text + '<br>' + '<font color="red">' + clue.newClue + '</font>' + '</dd>'
+            html = '<dd class="crossword-clues__list-item crossword-clues__list-item--down-' + clue.number + '" data-number="' + clue.number + '">' + clue.text + '<br> NEW CLUE: ' + '<font color="red">' + clue.newClue + '</font>' + '</dd>'
             downCluesDiv.append(html)
         }
     }
