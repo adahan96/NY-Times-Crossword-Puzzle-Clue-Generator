@@ -18,6 +18,12 @@ def findFromUrbanDictionary(word):
         allExampleSentences = [element.text for element in soup.find_all(
             "div", attrs={"class": "example"})]
         # Get the shortest example sentence
+
+        # Remove expressions
+        for sentence in allExampleSentences:
+            if "::" in sentence:
+                allExampleSentences.remove(sentence)
+        
         exampleSentence = min(allExampleSentences, key=len)
     except:
         exampleSentence = None
