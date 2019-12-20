@@ -130,18 +130,20 @@ class Clue:
         for answer in self.answer:
             synonym, antonym = findFromMWThesaurus(answer)
             if synonym is not None:
-                print("[MERRIAM WEBSTER] Found a synonym for", answer, ":", synonym)
+                print("[THESAURUS] Found a synonym for", answer, ":", synonym)
                 self.synonyms.add(synonym)
             if antonym is not None:
-                print("[MERRIAM WEBSTER] Found an antonym for", answer, ":", antonym)
+                print("[THESAURUS] Found an antonym for", answer, ":", antonym)
                 self.antonyms.add(antonym)
 
     def findUrbanDictionary(self):
         for answer in self.answer:
             meaning, example = findFromUrbanDictionary(answer)
             if meaning is not None:
+                print("[URBAN DICTIONARY] Found a definition for", answer, ":", meaning)
                 self.definitions.add(meaning)
             if example is not None:
+                print("[URBAN DICTIONARY] Found an example sentence for", answer, ":", example)
                 self.example_sentences.add(example)
 
     def preprocess_clues(self):
