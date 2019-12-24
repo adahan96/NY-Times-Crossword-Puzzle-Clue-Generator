@@ -1,28 +1,27 @@
 import random
 import spacy
 from concurrent.futures import ThreadPoolExecutor
+from multiprocessing import Process
 from Finders.DatamuseFinder import findFromDatamuse
 from Finders.MerriamWebsterFinder import findFromMWDictionary, findFromMWThesaurus
-from Finders.Wordnet import Wordnet
+from Finders.Wordnet import findFromWordnet
 from Finders.UrbanDictionaryFinder import findFromUrbanDictionary
-from GoogleSearch import didyoumean
+from GoogleSearch import getDidyoumeanSuggestion
 
 
 class Clue:
-    def __init__(self, realClue, answer):
+    def __init__(self, originalClue, answer):
+        self.originalClue = originalClue
+        self.originalAnswer = answer.lower()
+        self.answers = set()  # The set contains the original answer and alternative answesr
+        self.answers.add(self.originalAnswer)
+        self.findAlternativeAnswers()
 
-        answer = answer.lower()
-
-        self.realClue = realClue
-        self.answer = set()
-        self.answer.add(answer)
-
-        corrected_answer, is_word_corrected = didyoumean(answer)
-        if is_word_corrected:
-            self.answer.add(corrected_answer)
-
-        self.definitions = set()
-        self.newClues = set()
+        """New clues is a list of 3-tuples: (clue, category, source)
+        Categories: synonym
+        Sources: datamuse
+        """
+        self.newClues = []  # Not a set because new clues will be sorted later
         self.definitions = set()
         self.synonyms = set()
         self.antonyms = set()
@@ -31,13 +30,14 @@ class Clue:
         # Initialization
         self.nlp = spacy.load('en_core_web_sm')
 
-    def generateNewClues(self):
-        def run_io_tasks_in_parallel(tasks):
-            with ThreadPoolExecutor() as executor:
-                running_tasks = [executor.submit(task) for task in tasks]
-                for running_task in running_tasks:
-                    running_task.result()
+    def findAlternativeAnswers(self):
+        """Find alternative answers and add them to answers set
+        """
+        corrected_answer = getDidyoumeanSuggestion(self.originalAnswer)
+        if corrected_answer is not None:
+            self.answers.add(corrected_answer)
 
+    def generateNewClues(self):
         run_io_tasks_in_parallel([
             self.findFromWordnet,
             self.searchDatamuse,
@@ -46,143 +46,168 @@ class Clue:
             self.findUrbanDictionary
         ])
         self.preprocess_clues()
+        self.filterNewClues()
+        self.sortNewClues()
+        print('\n'.join(map(str, self.newClues)))  # Print sorted clues
 
     def filterNewClues(self):
-        """New clues that are similar to real clue should be removed from
-        newClues list
+        """New clues that contain any answer (original or alternative) and that are similar to
+        original clue should be removed from newClues list
         """
+        # Remove clues that contain original answer
+        # TODO: This part should be fixed
+        """
+        for clue in self.newClues:
+            clueWords = clue[0].lower().split(' ')
+
+            for answer in self.answers:
+                for c in clueWords:
+                    if c in answer.lower() or answer.lower() in c:
+                        self.newClues.remove(clue)
+        """
+        # Remove similar clues
         threshold = 0.80
 
-        realClue_nlp = self.nlp(self.realClue)
+        originalClue_nlp = self.nlp(self.originalClue)
         filteredClues = set()
         for clue in self.newClues:
-            clue_nlp = self.nlp(clue)
-            similarity_percent = realClue_nlp.similarity(clue_nlp)
-            if similarity_percent < threshold:
-                filteredClues.add(clue)
+            similarity_percent = originalClue_nlp.similarity(self.nlp(clue[0]))
+            if similarity_percent >= threshold:
+                self.newClues.remove(clue)
 
-        self.newClues = filteredClues
-
-        # make everything lower in new clues but first letter
-        self.newClues = [clue.lower() for clue in self.newClues]
-        self.newClues = [clue.capitalize() for clue in self.newClues]
-        self.newClues = set(self.newClues)
+    def getTheBestClue(self):
+        if len(self.newClues) != 0:
+            return self.newClues[0][0]
+        else:
+            print(
+                f"Error: newClues is empty for the answer {self.originalAnswer}")
+            return None
 
     def getRandomNewClue(self):
-        if len(self.newClues) == 0:
-
-            print('')
-            return None
-        else:
+        if len(self.newClues) != 0:
             return random.choice(list(self.newClues))
+        else:
+            return None
 
     def findFromWordnet(self):
-        Wordnet.findFromWordnet(
-            self.answer, self.synonyms, self.antonyms, self.definitions, self.example_sentences)
+        for answer in self.answers:
+            antonym, definition, exampleSentence = findFromWordnet(answer)
+            if antonym is not None:
+                self.antonyms.add((antonym, "wordnet"))
+            if definition is not None:
+                self.definitions.add((definition, "wordnet"))
+            if exampleSentence is not None:
+                self.example_sentences.add((exampleSentence, "wordnet"))
 
     def searchDatamuse(self):
-        for answer in self.answer:
+        """Datamuse results are added to synonyms
+        """
+        for answer in self.answers:
             result = findFromDatamuse(answer)
             if result is not None:
-                print("[DATAMUSE] Found a clue for", answer, ":", result)
-                self.newClues.add(result)
+                self.synonyms.add((result, "datamuse"))
 
     def findFromMWDictionary(self):
-        for answer in self.answer:
+        for answer in self.answers:
             definition, sentence = findFromMWDictionary(answer)
             if definition is not None:
-                print("[MERRIAM WEBSTER] Found a definition for", answer, ":", definition)
-                self.definitions.add(definition)
+                self.definitions.add((definition, "mw"))
             if sentence is not None:
-                print("[MERRIAM WEBSTER] Found an example sentence for", answer, ":", sentence)
-                self.example_sentences.append(sentence)
+                self.example_sentences.append((sentence, "mw"))
 
     def findFromMWThesaurus(self):
-        for answer in self.answer:
+        for answer in self.answers:
             synonym, antonym = findFromMWThesaurus(answer)
             if synonym is not None:
-                print("[THESAURUS] Found a synonym for", answer, ":", synonym)
-                self.synonyms.add(synonym)
+                self.synonyms.add((synonym, "mw"))
             if antonym is not None:
-                print("[THESAURUS] Found an antonym for", answer, ":", antonym)
-                self.antonyms.add(antonym)
+                self.antonyms.add((antonym, "mw"))
 
     def findUrbanDictionary(self):
-        for answer in self.answer:
+        for answer in self.answers:
             meaning, example = findFromUrbanDictionary(answer)
             if meaning is not None:
-                print("[URBAN DICTIONARY] Found a definition for", answer, ":", meaning)
-                self.definitions.add(meaning)
+                self.definitions.add((meaning, "urban"))
             if example is not None:
-                print("[URBAN DICTIONARY] Found an example sentence for", answer, ":", example)
-                self.example_sentences.add(example)
+                self.example_sentences.add((example, "urban"))
 
     def preprocess_clues(self):
+        # TODO: These steps can be parallelized for a faster computation
         self.preprocess_example_sentences()
         self.preprocess_antonyms()
         self.preprocess_synonyms()
         self.preprocess_definitions()
-        self.newClueprocess()
 
     def preprocess_example_sentences(self):
+        """For every example sentence, replace answer with ___
+        and add (sentence, "example-sentence", source) tuple to newClues
+        """
         max_word_number = 13
-        for answer in self.answer:
+        for answer in self.answers:
             for exs in self.example_sentences:
-                if answer.lower() in exs and len(exs.split(' ')) < max_word_number:
-                    self.newClues.add(exs.replace(answer.lower(), '___'))
-                else:
-                    pass
-                    #print('Answer not in example sentence')
+                exampleSentence, source = exs[0], exs[1]
+                if answer.lower() in exampleSentence and len(exampleSentence.split(' ')) < max_word_number:
+                    newExampleSentence = exampleSentence.replace(
+                        answer.lower(), '___')
+                    self.newClues.append(
+                        (newExampleSentence, "example-sentence", source))
 
     def preprocess_definitions(self):
-        ayberk_magic = 13
+        max_word_number = 13
         for definition in self.definitions:
-            for answer in self.answer:
-                if len(definition.split(' ')) < ayberk_magic and answer.lower() not in definition.lower():
-                    self.newClues.add(definition)
-        print('')
+            for answer in self.answers:
+                definition, source = definition[0], definition[1]
+                if len(definition.split(' ')) < max_word_number and answer.lower() not in definition.lower():
+                    self.newClues.append((definition, "definition", source))
 
     def preprocess_antonyms(self):
         for antonym in self.antonyms:
+            antonym, source = antonym[0], antonym[1]
             l = antonym.lower()
-            for answer in self.answer:
+            for answer in self.answers:
                 if l.find(answer.lower()) == -1:
                     new_antonym = 'Opposite of ' + antonym
-                    self.newClues.add(new_antonym)
-                else:
-                    pass
+                    self.newClues.append((new_antonym, "antonym", source))
 
     def preprocess_synonyms(self):
         for synonym in self.synonyms:
+            synonym, source = synonym[0], synonym[1]
             l = synonym.lower()
-            for answer in self.answer:
+            for answer in self.answers:
                 if l.find(answer.lower()) == -1:
-                    self.newClues.add(l)
-                else:
-                    pass
+                    self.newClues.append((l, "synonym", source))
 
-    def newClueprocess(self):
+    def sortNewClues(self):
+        sourceSorting = [
+            "wordnet",
+            "mw",
+            "datamuse",
+            "urban"
+        ]
 
-        print("*" * 10)
-        print(self.newClues)
+        categorySorting = [
+            "definition",
+            "synonym",
+            "antonym",
+            "example-sentence"
+        ]
 
-        processed_clues = set()
-        for clue in self.newClues:
-            clue = clue.lower()
-            clue_splitted = clue.split(' ')
+        self.newClues = sorted(self.newClues, key=lambda x: (
+            sourceSorting.index(x[2]), categorySorting.index(x[1])))
 
-            for answer in self.answer:
 
-                word_flag = True
+def run_io_tasks_in_parallel(tasks):
+    # https://stackoverflow.com/a/56138825/5964489
+    with ThreadPoolExecutor() as executor:
+        running_tasks = [executor.submit(task) for task in tasks]
+        for running_task in running_tasks:
+            running_task.result()
 
-                for c in clue_splitted:
-                    if c in answer.lower() or answer.lower() in c:
-                        word_flag = False
 
-                if word_flag:
-                    processed_clues.add(clue)
-
-        self.newClues = processed_clues
-
-        print("-" * 10)
-        print(self.newClues)
+def run_cpu_tasks_in_parallel(tasks):
+    # https://stackoverflow.com/a/56138825/5964489
+    running_tasks = [Process(target=task) for task in tasks]
+    for running_task in running_tasks:
+        running_task.start()
+    for running_task in running_tasks:
+        running_task.join()

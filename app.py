@@ -20,7 +20,7 @@ def root(path):
 def newClues():
     date = request.args.get('date')
     print("Puzzle downloading started")
-    runScraper()
+    # runScraper()
     print("Puzzle downloading finished")
     result = runNewClueGenerator(date)
     return jsonify(result)

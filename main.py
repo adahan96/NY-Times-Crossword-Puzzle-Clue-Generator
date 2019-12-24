@@ -34,15 +34,11 @@ def runNewClueGenerator(date):
     for rawClue in puzzle["clues"]:
         clue = Clue(rawClue["text"], rawClue["answer"])
         clue.generateNewClues()
-        clue.filterNewClues()
-        print("All clues generated for", clue.answer)
-        print(clue.newClues)
-        randomClue = clue.getRandomNewClue()
+        bestClue = clue.getTheBestClue()
         print(
-            f"Selected random clue: {randomClue} ---- Real clue: {rawClue['text']} ---- Answer: {rawClue['answer']}")
+            f"Selected random clue: {bestClue} ---- Real clue: {rawClue['text']} ---- Answer: {rawClue['answer']}")
         print()
-
         # Append new clue
-        rawClue["newClue"] = randomClue
+        rawClue["newClue"] = bestClue
 
     return puzzle
