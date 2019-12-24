@@ -1,10 +1,6 @@
 import random
 import spacy
 from concurrent.futures import ThreadPoolExecutor
-from Finders.AntonymFinder import findAntonym
-from Finders.DictionaryFinder import findDefinitionFromDictionary
-from Finders.ExampleSentenceFinder import findExampleSentence
-from Finders.SpinnerFinder import findSpinner
 from Finders.DatamuseFinder import findFromDatamuse
 from Finders.MerriamWebsterFinder import findFromMWDictionary, findFromMWThesaurus
 from Finders.Wordnet import Wordnet
@@ -31,7 +27,6 @@ class Clue:
         self.synonyms = set()
         self.antonyms = set()
         self.example_sentences = set()
-        self.spinner = set()
 
         # Initialization
         self.nlp = spacy.load('en_core_web_sm')
@@ -44,11 +39,7 @@ class Clue:
                     running_task.result()
 
         run_io_tasks_in_parallel([
-            self.lookUpDictionaries,
             self.findFromWordnet,
-            self.findAntonym,
-            self.findExampleSentence,
-            self.findSpinner,
             self.searchDatamuse,
             self.findFromMWDictionary,
             self.findFromMWThesaurus,
@@ -85,29 +76,9 @@ class Clue:
         else:
             return random.choice(list(self.newClues))
 
-    def lookUpDictionaries(self):
-        result = findDefinitionFromDictionary(self.answer)
-        if result is not None:
-            self.definitions.add(result)
-
     def findFromWordnet(self):
         Wordnet.findFromWordnet(
             self.answer, self.synonyms, self.antonyms, self.definitions, self.example_sentences)
-
-    def findAntonym(self):
-        result = findAntonym(self.answer)
-        if result is not None:
-            self.antonyms.add(result)
-
-    def findExampleSentence(self):
-        result = findExampleSentence(self.answer)
-        if result is not None:
-            self.example_sentences.add(result)
-
-    def findSpinner(self):
-        result = findSpinner(self.realClue)
-        if result is not None:
-            self.newClues.add(result)
 
     def searchDatamuse(self):
         for answer in self.answer:
