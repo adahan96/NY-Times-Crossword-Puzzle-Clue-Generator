@@ -192,9 +192,11 @@ class Clue:
             "example-sentence"
         ]
 
-        self.newClues = sorted(self.newClues, key=lambda x: (
+        try:
+            self.newClues = sorted(self.newClues, key=lambda x: (
             sourceSorting.index(x[2]), categorySorting.index(x[1])))
-
+        except:
+            pass
 
 def run_io_tasks_in_parallel(tasks):
     # https://stackoverflow.com/a/56138825/5964489
